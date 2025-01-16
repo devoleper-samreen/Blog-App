@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import authService from "../../appwrite/config"
 import { logout } from "../../store/authSlice"
-import { Button } from '@mui/material'
+//import { Button } from '@mui/material'
 
 function LogutBtn() {
     const dispatch = useDispatch()
@@ -15,7 +15,7 @@ function LogutBtn() {
         )
     }
     return (
-        <Button>Logout</Button>
+        <button onClick={logoutHandler}>Logout</button>
     )
 }
 
