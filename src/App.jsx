@@ -34,6 +34,7 @@ function App() {
               <Header />
               <main>
                 todo
+                <Footer />
               </main>
               <Footer />
             </div>
