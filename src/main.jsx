@@ -16,12 +16,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Home</h1>
+        element: <h1>home</h1>
       },
       {
         path: "/login",
         element: (
-          <ProtectedAuthLayout authentication={false}>
+          <ProtectedAuthLayout authentication={true}>
             <Login />
           </ProtectedAuthLayout>
         )
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/all=posts",
+        path: "/all-posts",
         element: (
           <ProtectedAuthLayout authentication={false}>
             <h1>all posts</h1>
