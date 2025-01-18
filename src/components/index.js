@@ -10,6 +10,7 @@ import ProtectedAuthLayout from "./ProtectedAuthLayout"
 import RTE from "./RTE"
 import Select from "./Select"
 import Signup from "./Signup"
+import PostForm from "../components/post-form/PostForm"
 export {
     Header,
     Footer,
@@ -22,5 +23,6 @@ export {
     PostCard,
     RTE,
     Select,
-    ProtectedAuthLayout
+    ProtectedAuthLayout,
+    PostForm
 }
