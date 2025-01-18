@@ -5,9 +5,14 @@ import App from './App.jsx'
 import { Provider } from 'react-redux';
 import store from "./store/store.js"
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ProtectedAuthLayout from './components/ProtectedAuthLayout.jsx';
-import Login from './components/Login.jsx';
-import Signup from './components/Signup.jsx';
+import { ProtectedAuthLayout, Login } from './components/index.js';
+
+//pages
+import Signup from './pages/Signup.jsx';
+import Home from "./pages/Home.jsx"
+import AllPosts from "./pages/AllPosts.jsx"
+import AddPost from "./pages/AddPost.jsx"
+import EditPost from "./pages/EditPost.jsx"
 
 const router = createBrowserRouter([
   {
@@ -16,12 +21,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>home</h1>
+        element: <Home />
       },
       {
         path: "/login",
         element: (
-          <ProtectedAuthLayout authentication={true}>
+          <ProtectedAuthLayout authentication={false}>
             <Login />
           </ProtectedAuthLayout>
         )
@@ -38,7 +43,9 @@ const router = createBrowserRouter([
         path: "/all-posts",
         element: (
           <ProtectedAuthLayout authentication={false}>
-            <h1>all posts</h1>
+            {" "}
+            <AllPosts />
+
           </ProtectedAuthLayout>
         )
       },
@@ -46,10 +53,24 @@ const router = createBrowserRouter([
         path: "/add-post",
         element: (
           <ProtectedAuthLayout authentication={false}>
-            <h1>add post</h1>
+            {" "}
+            <AddPost />
           </ProtectedAuthLayout>
         )
-      }
+      },
+      {
+        path: "/edit-post/:slug",
+        element: (
+          <AuthLayout authentication>
+            {" "}
+            <EditPost />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/post/:slug",
+        element: <Post />,
+      },
 
     ]
   }
@@ -60,5 +81,5 @@ createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
-  </StrictMode>,
+  </StrictMode>
 )
