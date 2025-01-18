@@ -17,7 +17,7 @@ function Home() {
 
     if (posts.length === 0) {
         return (
-            <h1>login to read posts</h1>
+            <h1 className='text-center pt-28 text-4xl font-mono font-bold'>Login to read posts</h1>
         )
 
     }

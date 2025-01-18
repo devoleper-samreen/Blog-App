@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { login as authLogin } from "../store/authSlice"
-import { Input, Logo } from "./index"
+import { Input } from "./index"
 import { useDispatch } from 'react-redux'
 import authService from "../appwrite/auth"
 import { useForm } from 'react-hook-form'
@@ -12,7 +12,8 @@ function Signup() {
     const { register, handleSubmit } = useForm()
     const [error, setError] = useState("")
 
-    const login = async (data) => {
+    const create = async (data) => {
+        console.log("Creating account from signup ...");
         setError("")
         try {
             const userData = await authService.createAccount(data)
@@ -32,7 +33,7 @@ function Signup() {
     }
     return (
         <>
-            <section className="bg-gray-50 py-5 dark:bg-gray-900">
+            <section className="bg-gray-50 dark:bg-gray-900">
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 
                     <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -45,7 +46,7 @@ function Signup() {
                                     <p className='text-red-600 text-center mt-8'>{error}</p>
                                 )
                             }
-                            <form className="space-y-4 md:space-y-6">
+                            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(create)}>
                                 <div>
                                     <Input
                                         lable="Full Name"

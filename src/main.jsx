@@ -13,6 +13,7 @@ import Home from "./pages/Home.jsx"
 import AllPosts from "./pages/AllPosts.jsx"
 import AddPost from "./pages/AddPost.jsx"
 import EditPost from "./pages/EditPost.jsx"
+import Post from "./pages/Post.jsx"
 
 const router = createBrowserRouter([
   {
@@ -61,10 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/edit-post/:slug",
         element: (
-          <AuthLayout authentication>
+          <ProtectedAuthLayout authentication>
             {" "}
             <EditPost />
-          </AuthLayout>
+          </ProtectedAuthLayout>
         ),
       },
       {
@@ -77,9 +78,7 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </StrictMode>
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
 )

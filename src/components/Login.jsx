@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { login as authLogin } from "../store/authSlice"
-import { Input, Logo } from "./index"
+import { Input } from "./index"
 import { useDispatch } from 'react-redux'
 import authService from "../appwrite/auth"
 import { useForm } from 'react-hook-form'
@@ -84,7 +84,7 @@ function Login() {
 
                                         Sign up
                                     </Link>
-                                    {/* <a href="#" >Sign up</a> */}
+
                                 </p>
                             </form>
                         </div>
