@@ -11,17 +11,16 @@ function Footer() {
                     <div className="md:flex md:justify-between">
                         <div className="mb-6 md:mb-0">
                             <Logo width="130px" />
-                            {/* <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span> */}
                         </div>
                         <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                             <div>
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Company</h2>
                                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                     <li className="mb-4">
-                                        <a href="https://flowbite.com/" className="hover:underline">Features</a>
+                                        <Link className="hover:underline">Features</Link>
                                     </li>
                                     <li>
-                                        <a href="https://tailwindcss.com/" className="hover:underline">Pricing</a>
+                                        <Link className="hover:underline">Pricing</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -29,10 +28,10 @@ function Footer() {
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Support</h2>
                                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                     <li className="mb-4">
-                                        <a href="https://github.com/themesberg/flowbite" className="hover:underline ">Account</a>
+                                        <Link className="hover:underline ">Account</Link>
                                     </li>
                                     <li>
-                                        <a href="https://discord.gg/4eeurUVvTy" className="hover:underline">Contact Us</a>
+                                        <Link className="hover:underline">Contact Us</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -40,10 +39,10 @@ function Footer() {
                                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
                                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                     <li className="mb-4">
-                                        <a href="#" className="hover:underline">Privacy Policy</a>
+                                        <Link className="hover:underline">Privacy Policy</Link>
                                     </li>
                                     <li>
-                                        <a href="#" className="hover:underline">Terms &amp; Conditions</a>
+                                        <Link className="hover:underline">Terms &amp; Conditions</Link>
                                     </li>
                                 </ul>
                             </div>
