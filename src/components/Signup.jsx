@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form'
 function Signup() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
     const [error, setError] = useState("")
 
     const create = async (data) => {
@@ -18,7 +18,7 @@ function Signup() {
         try {
             const userData = await authService.createAccount(data)
             if (userData) {
-                const userData = await authService.getCurrentUser()
+                // const userData = await authService.getCurrentUser()
 
                 if (userData) {
                     dispatch(authLogin(userData))
@@ -43,7 +43,7 @@ function Signup() {
                             </h1>
                             {
                                 error && (
-                                    <p className='text-red-600 text-center mt-8'>{error}</p>
+                                    <p className='text-red-600 text-center mt-8'>{errors.name.message}</p>
                                 )
                             }
                             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(create)}>
