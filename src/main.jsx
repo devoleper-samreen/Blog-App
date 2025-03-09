@@ -14,6 +14,7 @@ import AllPosts from "./pages/AllPosts.jsx"
 import AddPost from "./pages/AddPost.jsx"
 import EditPost from "./pages/EditPost.jsx"
 import Post from "./pages/Post.jsx"
+import MyPosts from "./pages/MyPosts.jsx"
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,15 @@ const router = createBrowserRouter([
           <ProtectedAuthLayout authentication>
             {" "}
             <EditPost />
+          </ProtectedAuthLayout>
+        ),
+      },
+      {
+        path: "/my-posts",
+        element: (
+          <ProtectedAuthLayout authentication>
+            {" "}
+            <MyPosts />
           </ProtectedAuthLayout>
         ),
       },

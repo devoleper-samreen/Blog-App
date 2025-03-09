@@ -25,13 +25,11 @@ function PostForm({ post }) {
 
     const submit = async (data) => {
         setLoading(true)
-
-        if (post != undefined) {
-            data.image[0] ? appwriteService.uploadFile(data.image[0]) : null
+        if (post) {
+            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
             if (file) {
                 appwriteService.deleteFile(post.featuredImage)
-
             }
 
             const dbPost = await appwriteService.updatePost(post.$id, {
@@ -44,8 +42,8 @@ function PostForm({ post }) {
             }
 
             setLoading(false)
-        }
-        else {
+
+        } else {
             setLoading(true)
             const file = await appwriteService.uploadFile(data.image[0])
 

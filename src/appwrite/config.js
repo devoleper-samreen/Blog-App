@@ -37,7 +37,7 @@ export class Service {
 
     async updatePost(slug, { title, content, featuredImage, status, userId }) {
         try {
-            return await this.updateDocument(
+            return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
@@ -55,12 +55,12 @@ export class Service {
         }
     }
 
-    async deletePost() {
+    async deletePost(postId) {
         try {
             await this.databases.deleteDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                slug
+                postId
             )
 
             return true
@@ -167,6 +167,20 @@ export class Service {
             fileId
         )
     }
+
+    async getMyPosts(userId) {
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                [Query.equal("userId", userId)]
+            );
+        } catch (error) {
+            console.log("appwrite service :: getMyPosts :: error", error);
+            return false;
+        }
+    }
+
 
 }
 

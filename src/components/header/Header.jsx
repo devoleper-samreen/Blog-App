@@ -81,7 +81,7 @@ function Header() {
                                 //authStatus
                                 true && (
 
-                                    <LogoutBtn />
+                                    <LogoutBtn onClick={() => setIsMenuOpen(false)} />
                                 )
                             }
 
