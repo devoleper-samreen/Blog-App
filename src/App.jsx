@@ -16,7 +16,6 @@ function App() {
       .then((userData) => {
         if (userData) {
           dispatch(login({ userData }))
-
         }
         else {
           dispatch(logout())
@@ -30,7 +29,7 @@ function App() {
   return (
     <>
       {
-        !loading ? (
+        (
           <div className='min-h-screen flex flex-wrap content-between text-white'>
             <div className='w-full block'>
               <Header />
@@ -40,7 +39,7 @@ function App() {
               <Footer />
             </div>
           </div>
-        ) : null
+        )
       }
 
     </>

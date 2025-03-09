@@ -11,7 +11,6 @@ function ProtectedAuthLayout({ children, authentication = true }) {
     useEffect(() => {
         if (authentication && authStatus != authentication) {
             navigate("/login")
-
         }
         else if (!authentication && authStatus !== authentication) {
             navigate("/")

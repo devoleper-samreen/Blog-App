@@ -4,6 +4,7 @@ import { Container, PostCard } from "../components/index"
 
 function AllPosts() {
     const [posts, setPosts] = useState([])
+
     useEffect(() => {
 
     }, [])
@@ -12,7 +13,6 @@ function AllPosts() {
         .then((posts) => {
             if (posts) {
                 setPosts(posts.documents)
-
             }
         })
 
@@ -23,10 +23,8 @@ function AllPosts() {
                     {
                         posts.map((post) => (
                             <div key={post.$id}>
-                                <PostCard post={post} />
-
+                                <PostCard {...post} />
                             </div>
-
                         ))
                     }
 

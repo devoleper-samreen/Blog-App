@@ -1,8 +1,7 @@
-import { Account, Client, ID, Query, Databases, Storage } from "appwrite";
+import { Client, ID, Query, Databases, Storage } from "appwrite";
 import conf from "../conf/consf";
 
 export class Service {
-
     client = new Client();
     databases;
     bucket;
@@ -10,19 +9,13 @@ export class Service {
         this.client
             .setEndpoint(conf.appwriteUrl)
             .setProject(conf.appwriteProjectId)
-        // client.setHeaders(
-        //     {
-        //         'X-Appwrite-Project': '67865825002ff0fda1a4', // Or your appwrite project.
-        //         'X-Appwrite-Key': 'standard_09e127d91a99ad233e81f841194d2a149a85be80f56b181c390c5a73ebd29e856c3b3a59d7191ac58a3b8ec3c91e481f879c05473c5afb5d6c77a65ba471d2aa4c1bf2be5bf00e19ba35a3d9b0818a7002657519d82c05a7cbdb1b4bf976a6488e76b0a84cf3f269c76a9b970f91bdc6789079773298cf06fd1fa37b06957ab5' // Or your API Key if that is your prefered method.
-        //     }
-        // );
         this.databases = new Databases(this.client);
         this.bucket = new Storage(this.client);
     }
 
     async createPost({ title, slug, content, featuredImage, status, userId }) {
         try {
-            return await this.createDocument(
+            return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
@@ -33,7 +26,8 @@ export class Service {
                     status,
                     userId
                 }
-            )
+            );
+
 
         } catch (error) {
             console.log("appwrite service :: createPost :: error", error);
@@ -79,6 +73,7 @@ export class Service {
     }
 
     async getPost(slug) {
+
         try {
             return await this.databases.getDocument(
                 conf.appwriteDatabaseId,
@@ -92,6 +87,28 @@ export class Service {
 
         }
     }
+
+    // async getPost(slug) {
+    //     try {
+    //         const response = await this.databases.listDocuments(
+    //             conf.appwriteDatabaseId,
+    //             conf.appwriteCollectionId,
+    //             [Query.equal("slug", slug)]
+    //         );
+
+    //         if (response.documents.length > 0) {
+    //             return response.documents[0];
+    //         } else {
+    //             console.log("No post found with the given slug.");
+    //             return false;
+    //         }
+
+    //     } catch (error) {
+    //         console.log("appwrite service :: getPost :: error", error);
+    //         return false;
+    //     }
+    // }
+
 
     async getPosts(queries = [Query.equal("status", "active")]) {
         try {
@@ -150,9 +167,6 @@ export class Service {
             fileId
         )
     }
-
-
-
 
 }
 

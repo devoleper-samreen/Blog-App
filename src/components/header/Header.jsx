@@ -1,11 +1,9 @@
 import React from 'react'
-import { Container, Logo, LogoutBtn } from '../index'
+import { LogoutBtn } from '../index'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { Login } from '../index'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button } from '@mui/material'
 
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,12 +40,10 @@ function Header() {
     ]
     return (
         <>
-
-
             <nav className="bg-white border-gray-200 dark:bg-gray-900">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <Link to='/' className='h-8'>
-                        <Logo />
+                        Logo
                     </Link>
 
                     <button
