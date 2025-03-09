@@ -7,12 +7,15 @@ function Signup() {
     const navigate = useNavigate()
     const { register, handleSubmit } = useForm()
     const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
 
     const create = async (data) => {
         console.log("Creating account from signup ...");
         try {
+            setLoading(true)
             const userData = await authService.createAccount(data)
             if (userData) {
+                setLoading(false)
                 navigate("/login")
             }
 
@@ -22,66 +25,58 @@ function Signup() {
         }
     }
     return (
-        <>
-            <section className="bg-gray-500">
-                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                    <div className="w-full bg-gray-700 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-                        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                            <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl text-center">
-                                Create an Account
-                            </h1>
-                            {
-                                error && (
-                                    <p className='text-red-500 text-center mt-8'>{error}</p>
-                                )
-                            }
-                            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(create)}>
-                                <div>
-                                    <input
-                                        placeholder="Enter your full name"
-                                        className="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                        {...register("name", {
-                                            required: true
-                                        })}
+        <section className="bg-gray-900 flex items-center justify-center px-4 my-36 lg:my-10">
+            <div className="w-full max-w-md bg-gray-800 bg-opacity-90 backdrop-blur-md shadow-lg rounded-2xl p-8">
+                <h1 className="text-2xl font-bold text-center text-white">Create an Account</h1>
 
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="email"
-                                        placeholder="Enter your Email"
-                                        className="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                        {...register("email", {
-                                            required: true
+                {error && <p className="text-red-500 text-center mt-4">{error}</p>}
 
-                                        })}
-
-                                    />
-
-                                </div>
-                                <div>
-                                    <input
-                                        type="password"
-                                        className="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                        placeholder="••••••••"
-                                        {...register("password", {
-                                            required: true,
-                                        })}
-                                    />
-                                </div>
-
-                                <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600">Create an account</button>
-                                <p className="text-center text-sm font-light text-gray-50">
-                                    Already have an account?{" "}
-                                    <Link to="/login" className="font-medium text-primary-600 hover:underline">
-                                        Signin </Link>
-                                </p>
-                            </form>
-                        </div>
+                <form className="space-y-6 mt-6" onSubmit={handleSubmit(create)}>
+                    <div>
+                        <input
+                            placeholder="Enter your full name"
+                            className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3"
+                            {...register("name", { required: true })}
+                        />
                     </div>
-                </div>
-            </section>
-        </>
+
+                    <div>
+                        <input
+                            type="email"
+                            placeholder="Enter your Email"
+                            className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3"
+                            {...register("email", { required: true })}
+                        />
+                    </div>
+
+                    <div>
+                        <input
+                            type="password"
+                            className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3"
+                            placeholder="••••••••"
+                            {...register("password", { required: true })}
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-3 text-center transition-all disabled:bg-gray-500"
+                        disabled={loading}
+                    >
+                        {loading ? "submitting..." : "Create an Account"}
+
+                    </button>
+
+                    <p className="text-center text-sm text-gray-400">
+                        Already have an account?{" "}
+                        <Link to="/login" className="text-blue-400 hover:underline">
+                            Sign in
+                        </Link>
+                    </p>
+                </form>
+            </div>
+        </section>
+
     )
 }
 

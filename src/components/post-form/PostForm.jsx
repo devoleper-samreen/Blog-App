@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RTE } from "../../components/index"
 import appwriteService from "../../appwrite/config"
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 
 
 function PostForm({ post }) {
+    const [loading, setLoading] = useState(false)
 
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm(
         {
@@ -23,6 +24,7 @@ function PostForm({ post }) {
     const userData = useSelector(state => state.auth.userData)
 
     const submit = async (data) => {
+        setLoading(true)
 
         if (post != undefined) {
             data.image[0] ? appwriteService.uploadFile(data.image[0]) : null
@@ -40,15 +42,20 @@ function PostForm({ post }) {
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`)
             }
+
+            setLoading(false)
         }
         else {
+            setLoading(true)
             const file = await appwriteService.uploadFile(data.image[0])
 
             if (file) {
                 const fileId = file.$id
                 data.featuredImage = fileId
+                console.log("userdata : ", userData);
 
-                const newData = { ...data, userId: userData?.userData.$id }
+
+                const newData = { ...data, userId: userData?.$id }
                 console.log("new data : ", newData);
 
                 const dbPost = await appwriteService.createPost({
@@ -61,6 +68,8 @@ function PostForm({ post }) {
                 }
             }
         }
+
+        setLoading(false)
     }
 
     const slugTransform = useCallback((value) => {
@@ -87,54 +96,63 @@ function PostForm({ post }) {
     }, [watch, slugTransform, setValue])
 
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-            <div className="w-2/3 px-2">
+        <form onSubmit={handleSubmit(submit)} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Left Section - Title, Slug, Content */}
+            <div className="md:col-span-2">
                 <input
                     placeholder="Title"
-                    className="block mb-4 text-sm font-medium text-gray-700 bg-gray-500 py-3 px-6 rounded"
+                    className="w-full mb-4 text-sm font-medium text-white bg-gray-700 py-3 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                     {...register("title", { required: true })}
                 />
                 <input
                     placeholder="Slug"
-                    className="block mb-4 text-sm font-medium text-gray-700 bg-gray-500 py-3 px-6 rounded"
+                    className="w-full mb-4 text-sm font-medium text-white bg-gray-700 py-3 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                     {...register("slug", { required: true })}
                     onInput={(e) => {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+                <RTE name="content" control={control} defaultValue={getValues("content")} />
             </div>
-            <div className="w-1/3 px-2">
+
+            {/* Right Section - Image, Status, Submit Button */}
+            <div className="flex flex-col">
                 <input
-                    placeholder='Featured Image'
+                    placeholder="Featured Image"
                     type="file"
-                    className="block mb-4 text-sm font-medium text-gray-700 bg-gray-500 py-3 px-6 rounded"
+                    className="w-full mb-4 text-sm font-medium text-white bg-gray-700 py-3 px-6 rounded cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />
+
                 {post && (
                     <div className="w-full mb-4">
                         <img
                             src={appwriteService.getFilePreview(post.featuredImage)}
                             alt={post.title}
-                            className="rounded-lg"
+                            className="rounded-lg shadow-lg w-full h-auto"
                         />
                     </div>
                 )}
+
                 <select
-                    className="mb-4 bg-gray-500 text-white text-base py-3 px-10 rounded-md outline-none  transition-all"
+                    className="w-full mb-4 bg-gray-700 text-white text-base py-3 px-4 rounded-md outline-none transition-all focus:ring-2 focus:ring-blue-400"
                     {...register("status", { required: true })}
                 >
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                 </select>
 
-                <button type="submit" className={`${post ? "bg-green-500" : ""} w-full bg-green-700 rounded p-3 text-base`}>
+                <button
+                    type="submit"
+                    className={`${post ? "bg-green-500" : "bg-green-700"} w-full rounded p-3 text-white text-base font-semibold hover:opacity-80 transition-all disabled:bg-gray-500 disabled:cursor-not-allowed cursor-pointer`}
+                    disabled={loading}
+                >
                     {post ? "Update" : "Submit"}
                 </button>
-
             </div>
         </form>
+
     )
 }
 

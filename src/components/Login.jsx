@@ -10,11 +10,13 @@ function Login() {
     const dispatch = useDispatch()
     const { register, handleSubmit } = useForm()
     const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
 
     const login = async (data) => {
         try {
             console.log("Form Data email:", data.email);
             console.log("Form Data password:", data.password);
+            setLoading(true)
             const session = await authService.login(data)
             console.log("Login Response: ", session);
 
@@ -23,6 +25,7 @@ function Login() {
 
                 if (userData) {
                     dispatch(AuthLogin(userData))
+                    setLoading(false)
                     navigate("/")
                 }
             }
@@ -34,59 +37,55 @@ function Login() {
         }
     }
     return (
-        <>
-            <section className="bg-gray-500">
-                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                    <div className="w-full bg-gray-700 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-                        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                            <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl text-center">
-                                Sign in to your account
-                            </h1>
-                            {
-                                error && (
-                                    <p className='text-red-600 text-center mt-8'>{error}</p>
-                                )
-                            }
-                            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(login)}>
-                                <div>
-                                    <input
-                                        placeholder="Enter your email"
-                                        type="email"
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 text-lg"
-                                        {...register("email", {
-                                            required: true,
-                                            validate: {
-                                                matchPattern: (value) =>
-                                                    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || "Email address must be valid",
+        <section className="bg-gray-900 flex items-center justify-center px-4 my-36 lg:my-16">
+            <div className="w-full max-w-md bg-gray-800 bg-opacity-90 backdrop-blur-md shadow-lg rounded-2xl p-8">
+                <h1 className="text-2xl font-bold text-center text-white">Sign in to your account</h1>
 
-                                            }
-                                        })}
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        placeholder="••••••••"
-                                        type="password"
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 text-lg"
-                                        {...register("password", {
-                                            required: true,
-                                        })}
-                                    />
-                                </div>
+                {error && <p className="text-red-500 text-center mt-4">{error}</p>}
 
-                                <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600">Sign in</button>
-                                <p className="text-center text-sm font-light text-white">
-                                    Don’t have an account yet?{" "}
-                                    <Link to="/signup" className="font-medium text-primary-600 hover:underline">
-                                        Sign up
-                                    </Link>
-                                </p>
-                            </form>
-                        </div>
+                <form className="space-y-6 mt-6" onSubmit={handleSubmit(login)}>
+                    <div>
+                        <input
+                            placeholder="Enter your email"
+                            type="email"
+                            className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3"
+                            {...register("email", {
+                                required: true,
+                                validate: {
+                                    matchPattern: (value) =>
+                                        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || "Email address must be valid",
+                                },
+                            })}
+                        />
                     </div>
-                </div>
-            </section>
-        </>
+
+                    <div>
+                        <input
+                            placeholder="••••••••"
+                            type="password"
+                            className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3"
+                            {...register("password", { required: true })}
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-3 text-center transition-all disabled:bg-gray-500"
+                        disabled={loading}
+                    >
+                        {loading ? "submitting..." : "Sign in"}
+                    </button>
+
+                    <p className="text-center text-sm text-gray-400">
+                        Don’t have an account yet?{" "}
+                        <Link to="/signup" className="text-blue-400 hover:underline">
+                            Sign up
+                        </Link>
+                    </p>
+                </form>
+            </div>
+        </section>
+
     )
 }
 
