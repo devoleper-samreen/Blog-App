@@ -42,7 +42,7 @@ function Header() {
         <>
             <nav className="bg-white border-gray-200 dark:bg-gray-900">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                    <Link to='/' className='h-8'>
+                    <Link to='/' className='h-8 font text-3xl'>
                         Logo
                     </Link>
 
@@ -62,6 +62,7 @@ function Header() {
                                         <li key={item.name} className='block py-2 px-5 text-white rounded-lg md:bg-transparent'>
                                             <NavLink
                                                 to={item.slug}
+                                                onClick={() => setIsMenuOpen(false)}
                                                 className={({ isActive }) =>
                                                     isActive
                                                         ? 'text-blue-500 font-semibold block py-2 px-5 rounded-lg'
@@ -70,7 +71,6 @@ function Header() {
                                             >
                                                 {item.name}
                                             </NavLink>
-                                            {/* <button onClick={() => navigate(item.slug)}>{item.name}</button> */}
                                         </li>
                                     ) : null
 
@@ -82,18 +82,14 @@ function Header() {
                                 true && (
 
                                     <LogoutBtn />
-
-
                                 )
                             }
-
 
                         </ul>
                     </div>
                 </div>
             </nav >
             <hr className="border-gray-200 dark:border-gray-700" />
-
         </>
 
     )

@@ -17,20 +17,18 @@ function Home() {
 
     if (posts.length === 0) {
         return (
-            <h1 className='text-center pt-28 text-4xl font-mono font-bold'>Login to read posts</h1>
+            <h1 className='text-center pt-28 text-4xl font-mono font-bold'>Loading...</h1>
         )
     }
 
-
     return (
-        <div className='w-full py-8'>
+        <div className='w-full py-8 h-fit'>
             <Container>
-                <div className='flex flex-wrap'>
+                <div className='flex flex-wrap' >
                     {
                         posts.map((post) => (
                             <div key={post.$id} className='p-2 w-1/4'>
                                 <PostCard {...post} />
-
                             </div>
                         ))
                     }
