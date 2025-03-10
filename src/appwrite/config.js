@@ -88,28 +88,6 @@ export class Service {
         }
     }
 
-    // async getPost(slug) {
-    //     try {
-    //         const response = await this.databases.listDocuments(
-    //             conf.appwriteDatabaseId,
-    //             conf.appwriteCollectionId,
-    //             [Query.equal("slug", slug)]
-    //         );
-
-    //         if (response.documents.length > 0) {
-    //             return response.documents[0];
-    //         } else {
-    //             console.log("No post found with the given slug.");
-    //             return false;
-    //         }
-
-    //     } catch (error) {
-    //         console.log("appwrite service :: getPost :: error", error);
-    //         return false;
-    //     }
-    // }
-
-
     async getPosts(queries = [Query.equal("status", "active")]) {
         try {
             return await this.databases.listDocuments(
@@ -180,7 +158,6 @@ export class Service {
             return false;
         }
     }
-
 
 }
 

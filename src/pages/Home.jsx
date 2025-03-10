@@ -3,6 +3,7 @@ import appwriteService from "../appwrite/config"
 import { Container, PostCard } from "../components/index"
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Scaloton from "../components/Scaloton"
 
 function Home() {
     const [loading, setLoading] = useState(false)
@@ -24,12 +25,12 @@ function Home() {
     }, [user])
 
     if (loading) {
-        return <h1 className='text-center pt-28 text-4xl font-mono font-bold'>Loading...</h1>
+        return <Scaloton />
     }
 
     if (user && posts.length === 0) {
         return (
-            <h1 className='text-center pt-28 text-4xl font-mono font-bold'>Loading...</h1>
+            <Scaloton />
         )
     }
 

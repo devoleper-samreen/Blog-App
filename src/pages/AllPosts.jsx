@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import appwriteService from "../appwrite/config"
 import { Container, PostCard } from "../components/index"
+import Scaloton from "../components/Scaloton"
 
 function AllPosts() {
     const [posts, setPosts] = useState([])
@@ -18,7 +19,7 @@ function AllPosts() {
     }, [])
 
     if (loading) {
-        return <h1 className='text-center pt-28 text-4xl font-mono font-bold text-white'>Loading...</h1>
+        return <Scaloton />
     }
 
     return (

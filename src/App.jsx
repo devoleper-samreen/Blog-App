@@ -27,22 +27,15 @@ function App() {
   }, [])
 
   return (
-    <>
-      {
-        (
-          <div className='min-h-screen flex flex-wrap content-between text-white'>
-            <div className='w-full block'>
-              <Header />
-              <main className='min-h-[345px] bg-gray-800 my-2 text-2xl'>
-                <Outlet />
-              </main>
-              <Footer />
-            </div>
-          </div>
-        )
-      }
-
-    </>
+    <div className='min-h-screen flex flex-wrap content-between text-white'>
+      <div className='w-full block'>
+        <Header />
+        <main className='min-h-[345px] bg-gray-800 my-2 text-2xl'>
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </div>
   )
 }
 
