@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux'
 
 function PostForm({ post }) {
     const [loading, setLoading] = useState(false)
-
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm(
         {
             defaultValues: {
@@ -19,55 +18,57 @@ function PostForm({ post }) {
             }
         }
     )
-
     const navigate = useNavigate()
     const userData = useSelector(state => state.auth.userData)
 
     const submit = async (data) => {
         setLoading(true)
-        if (post) {
-            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
+        try {
+            if (post) {
+                const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
-            if (file) {
-                appwriteService.deleteFile(post.featuredImage)
-            }
+                if (file) {
+                    appwriteService.deleteFile(post.featuredImage)
+                }
 
-            const dbPost = await appwriteService.updatePost(post.$id, {
-                ...data,
-                featuredImage: file ? file.$id : undefined
-            })
-
-            if (dbPost) {
-                navigate(`/post/${dbPost.$id}`)
-            }
-
-            setLoading(false)
-
-        } else {
-            setLoading(true)
-            const file = await appwriteService.uploadFile(data.image[0])
-
-            if (file) {
-                const fileId = file.$id
-                data.featuredImage = fileId
-                console.log("userdata : ", userData);
-
-
-                const newData = { ...data, userId: userData?.$id }
-                console.log("new data : ", newData);
-
-                const dbPost = await appwriteService.createPost({
-                    ...newData
+                const dbPost = await appwriteService.updatePost(post.$id, {
+                    ...data,
+                    featuredImage: file ? file.$id : undefined
                 })
 
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`)
+                }
 
+            } else {
+                const file = await appwriteService.uploadFile(data.image[0])
+
+                if (file) {
+                    const fileId = file.$id
+                    data.featuredImage = fileId
+                    console.log("userdata : ", userData);
+
+                    const newData = { ...data, userId: userData?.$id }
+                    console.log("new data : ", newData);
+
+                    const dbPost = await appwriteService.createPost({
+                        ...newData
+                    })
+
+                    if (dbPost) {
+                        navigate(`/post/${dbPost.$id}`)
+
+                    }
                 }
             }
+
+        } catch (error) {
+            console.error("Error:", error);
+
+        } finally {
+            setLoading(false)
         }
 
-        setLoading(false)
     }
 
     const slugTransform = useCallback((value) => {
@@ -86,7 +87,6 @@ function PostForm({ post }) {
             if (name === 'title') {
                 setValue('slug', slugTransform(value.title, { shouldValidate: true }))
             }
-
         })
 
         return () => subscription.unsubscribe()

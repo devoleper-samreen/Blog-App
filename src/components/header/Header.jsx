@@ -9,8 +9,6 @@ function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const authStatus = useSelector(state => state.auth.status)
 
-    const navigate = useNavigate()
-
     const navItems = [
         {
             name: "Home",

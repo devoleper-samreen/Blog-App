@@ -4,6 +4,7 @@ import appwriteService from "../appwrite/config";
 import { Container } from "../components/index";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
+import PostSkeleton from "../components/PostScaloton"
 
 function Post() {
     const [loading, setLoading] = useState(false)
@@ -27,7 +28,7 @@ function Post() {
     }, [slug, navigate]);
 
     if (loading) {
-        return <h1 className='text-center pt-28 text-4xl font-mono font-bold text-white'>Loading...</h1>
+        return <PostSkeleton />
     }
 
     const deletePost = () => {
