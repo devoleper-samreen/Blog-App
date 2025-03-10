@@ -3,16 +3,20 @@ import { useDispatch } from 'react-redux'
 import authService from "../../appwrite/auth"
 import { logout } from "../../store/authSlice"
 
-function LogutBtn() {
+function LogutBtn({ onClick }) {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
 
     const logoutHandler = async () => {
         try {
             setLoading(true)
+            if (onClick) {
+                onClick();
+            }
             await authService.logout();
             setLoading(false)
             dispatch(logout());
+
         } catch (error) {
             console.error("Logout failed:", error);
         }

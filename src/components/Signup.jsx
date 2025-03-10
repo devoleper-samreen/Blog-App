@@ -26,7 +26,7 @@ function Signup() {
     }
     return (
         <section className="bg-gray-900 flex items-center justify-center px-4 my-36 lg:my-10">
-            <div className="w-full max-w-md bg-gray-800 bg-opacity-90 backdrop-blur-md shadow-lg rounded-2xl p-8">
+            <div className="w-full max-w-md bg-gray-800 bg-opacity-90 shadow-lg rounded-2xl p-8">
                 <h1 className="text-2xl font-bold text-center text-white">Create an Account</h1>
 
                 {error && <p className="text-red-500 text-center mt-4">{error}</p>}
